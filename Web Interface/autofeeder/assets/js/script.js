@@ -1,31 +1,3 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyATqPwwlr4V8AyKHVNA4jayY-4JWGPRICc",
-  authDomain: "automaticfish-feeder.firebaseapp.com",
-  databaseURL: "https://automaticfish-feeder-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "automaticfish-feeder",
-  storageBucket: "automaticfish-feeder.firebasestorage.app",
-  messagingSenderId: "371811015957",
-  appId: "1:371811015957:web:55733c22e36d1293d25d1c",
-  measurementId: "G-4JE4N8W4ET"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-// Initialize Firebase
-
-const app = initializeApp(firebaseConfig);
-
-const analytics = getAnalytics(app);
-
 /*  clock */
 const hours = document.querySelector('.hours');
 const minutes = document.querySelector('.minutes');
@@ -61,10 +33,16 @@ function toggleDiv() {
 }
 
 const firebaseConfig = {
-    /*
-    Fill in firebase config
-    */
+	apiKey: "AIzaSyATqPwwlr4V8AyKHVNA4jayY-4JWGPRICc",
+	authDomain: "automaticfish-feeder.firebaseapp.com",
+  	databaseURL: "https://automaticfish-feeder-default-rtdb.asia-southeast1.firebasedatabase.app",
+  	projectId: "automaticfish-feeder",
+  	storageBucket: "automaticfish-feeder.firebasestorage.app",
+  	messagingSenderId: "371811015957",
+  	appId: "1:371811015957:web:55733c22e36d1293d25d1c",
+  	measurementId: "G-4JE4N8W4ET"
 };
+
 firebase.initializeApp(firebaseConfig);
 
 var countRef = firebase.database().ref('count');
