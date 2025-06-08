@@ -1,4 +1,3 @@
-<!--UI Developed by Shebin Jose Jacob-->
 <!DOCTYPE html>
 
 <html lang="en">
@@ -22,33 +21,46 @@
 </head>
 
 <body translate="no">
-    <div class="container">
-        <div class="components" id="1">
-            <div class="clock">
-                <div class="hand hours"></div>
-                <div class="hand minutes"></div>
-                <div class="hand seconds"></div>
-                <div class="point"></div>
-                <div class="marker">
-                    <span class="marker__1"></span>
-                    <span class="marker__2"></span>
-                    <span class="marker__3"></span>
-                    <span class="marker__4"></span>
+    <video autoplay muted loop id="background-video">
+        <source src="assets/videos/fish_aquarium.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="content-overlay">
+        <div class="header">
+            <h1>Fish Feeder</h1>
+        </div>
+        <div class="container">
+            <div class="components" id="1">
+                <div class="clock">
+                    <div class="hand hours"></div>
+                    <div class="hand minutes"></div>
+                    <div class="hand seconds"></div>
+                    <div class="point"></div>
+                    <div class="marker">
+                        <span class="marker__1"></span>
+                        <span class="marker__2"></span>
+                        <span class="marker__3"></span>
+                        <span class="marker__4"></span>
+                    </div>
+                </div>
+                <div class="btn btn__primary" onclick="feednow()">
+                    <p>Feed Now</p>
+                </div>
+                <div class="btn btn__secondary" onclick="toggleDiv()">
+                    <p>Schedule</p>
                 </div>
             </div>
-            <div class="btn btn__primary" onclick="feednow()">
-                <p>Feed Now</p>
-            </div>
-            <div class="btn btn__secondary" onclick="toggleDiv()">
-                <p>Schedule</p>
-            </div>
-        </div>
-        <div class="components2" id="2">
-            <div id="wrapper" class="wrapper">
-            </div>
-            <div class="icon" onclick="addStore()" id="timepicker">
-                <div class="icon__add">
-                    <ion-icon name="add"></ion-icon>
+            <div class="components2" id="2">
+                <div id="wrapper" class="wrapper">
+                </div>
+                <div class="btn btn__secondary back-btn" onclick="toggleDiv()">
+                    <p>Back to Main</p>
+                </div>
+                <div class="icon" onclick="addStore()" id="timepicker">
+                    <div class="icon__add">
+                        <ion-icon name="add"></ion-icon>
+                    </div>
                 </div>
             </div>
         </div>

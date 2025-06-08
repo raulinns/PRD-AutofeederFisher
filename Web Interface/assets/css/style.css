@@ -20,65 +20,120 @@
 html {
     box-sizing: border-box;
     font-size: 62.5%;
-    overflow-y: scroll;
-    background: var(--greyLight-1);
+    /* overflow-y: scroll; */ /* Dihapus untuk menghindari konflik dengan body overflow */
+    overflow: hidden; /* Tambahkan ini agar tidak ada scrollbar pada HTML */
 }
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+    font-family: "Poppins", sans-serif;
+    overflow: hidden; /* Sembunyikan scrollbar body jika video full-screen */
+    position: relative; /* Diperlukan untuk penempatan video absolut */
+    height: 100vh; /* Pastikan body mengambil seluruh tinggi viewport */
+    display: flex; /* Mengaktifkan flexbox untuk body */
+    flex-direction: column; /* Konten diatur secara kolom */
+    justify-content: center; /* Pusatkan konten secara vertikal */
+    align-items: center; /* Pusatkan konten secara horizontal */
+}
+
+#background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1; /* Posisikan di belakang konten */
+    background-size: cover;
+    filter: brightness(60%) blur(2px); /* Meredupkan dan sedikit memburamkan video agar teks lebih mudah dibaca */
+    object-fit: cover; /* Memastikan video mengisi seluruh area tanpa distorsi */
+}
+
+.content-overlay {
+    position: relative; /* Konten akan berada di atas video */
+    z-index: 1; /* Posisikan di atas video */
+    width: 100%; /* Pastikan overlay mencakup seluruh lebar */
+    height: 100%; /* Pastikan overlay mencakup seluruh tinggi */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem; /* Beri sedikit padding di sekeliling konten */
+    background-color: rgba(228, 235, 245, 0.2); /* Sedikit overlay transparan untuk membantu keterbacaan teks di atas video */
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    color: var(--greyDark);
+    box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2), -0.2rem -0.2rem 1.8rem var(--white);
+    border-radius: 2rem;
+    width: 80%;
+    max-width: 500px; /* Batasi lebar maksimum */
+    margin: 0 auto 2rem auto; /* Pusatkan header dan tambahkan margin bawah */
+}
+
+.header h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
 
 @media screen and (min-width: 900px) {
     html {
         font-size: 75%;
     }
     .container {
-        max-height: 100%;
+        /* max-height: 100%; */ /* Dihapus, height diatur oleh flexbox */
         display: flex;
+        flex-direction: column; /* Mengubah menjadi kolom agar komponen di bawah judul */
         justify-content: center;
         align-items: center;
         font-family: "Poppins", sans-serif;
-        background: var(--greyLight-1);
-        padding-top: 10%;
+        padding-top: 0; /* Padding sudah dihandle oleh .content-overlay */
+        margin-top: 0; /* Dihapus agar tidak ada dorongan ke bawah yang tidak perlu */
+        width: 100%; /* Lebar penuh */
+        height: auto; /* Biarkan konten menentukan tinggi */
     }
-    .components {
+    .header {
+        margin-bottom: 4rem;
+        width: 40%;
+        max-width: 400px; /* Batasi lebar maksimum */
+    }
+    .components,
+    .components2 { /* Gabungkan styling untuk konsistensi */
         width: 60%;
-        height: 60%;
+        max-width: 600px; /* Batasi lebar maksimum */
+        height: auto; /* Biarkan konten menentukan tinggi */
         border-radius: 3rem;
         box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2), -0.2rem -0.2rem 1.8rem var(--white);
         padding: 4rem;
         display: grid;
-        grid-template-columns: repeat(autofit, min-content);
-        grid-template-rows: repeat(autofit, -webkit-min-content);
-        grid-template-rows: repeat(autofit, min-content);
-        grid-column-gap: 1.5rem;
-        grid-row-gap: 2.5rem;
+        grid-template-columns: repeat(2, 1fr); /* Menggunakan 2 kolom dengan lebar yang sama */
+        grid-template-rows: auto auto auto; /* Baris menyesuaikan konten */
+        gap: 1.5rem; /* Menggunakan gap untuk spasi */
         align-items: center;
+        justify-items: center; /* Pusatkan item dalam grid */
     }
     .components2 {
-        width: 60%;
-        height: 60%;
-        border-radius: 3rem;
-        box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2), -0.2rem -0.2rem 1.8rem var(--white);
-        padding: 4rem;
-        display: grid;
-        grid-template-columns: repeat(autofit, min-content);
-        grid-template-rows: repeat(autofit, -webkit-min-content);
-        grid-template-rows: repeat(autofit, min-content);
-        grid-column-gap: 1.5rem;
-        grid-row-gap: 2.5rem;
-        align-items: center;
         display: none;
     }
     .wrapper {
-        width: inherit;
-        height: inherit;
-        grid-template-columns: repeat(autofit, min-content);
-        grid-template-rows: repeat(autofit, -webkit-min-content);
-        grid-template-rows: repeat(autofit, min-content);
-        grid-column-gap: 1.5rem;
-        grid-row-gap: 2.5rem;
-        justify-items: center;
+        width: 100%; /* Ambil lebar penuh dari components2 */
+        height: auto; /* Biarkan konten menentukan tinggi */
+        display: grid; /* Mengubah wrapper menjadi grid juga */
+        grid-template-columns: 1fr; /* Satu kolom */
+        gap: 1.5rem; /* Jarak antar item */
+        justify-items: center; /* Pusatkan item dalam grid */
         margin-bottom: 5%;
-        margin-left: 31.3%;
+        margin-left: 0; /* Hapus margin-left yang statis */
     }
-    /*  BUTTONS  */
+    /* BUTTONS  */
     .btn {
         width: 15rem;
         height: 4rem;
@@ -90,10 +145,12 @@ html {
         justify-content: center;
         cursor: pointer;
         transition: 0.3s ease;
+        padding: 1rem 2rem; /* Tambahkan padding agar teks tidak terlalu mepet */
+        font-size: 1.6rem; /* Ukuran font yang konsisten */
     }
     .btn__primary {
-        grid-column: 1/2;
-        grid-row: 3/5;
+        grid-column: 1 / 2; /* Kolom 1 */
+        grid-row: 2 / 3; /* Baris 2 */
         background: var(--primary);
         box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light), inset -0.2rem -0.2rem 1rem var(--primary-dark), 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white);
         color: var(--greyLight-1);
@@ -105,8 +162,8 @@ html {
         box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-dark), inset -0.2rem -0.2rem 1rem var(--primary-light);
     }
     .btn__secondary {
-        grid-column: 2/2;
-        grid-row: 3/5;
+        grid-column: 2 / 3; /* Kolom 2 */
+        grid-row: 2 / 3; /* Baris 2 */
         color: var(--greyDark);
     }
     .btn__secondary:hover {
@@ -126,11 +183,17 @@ html {
         cursor: pointer;
         transition: 0.3s ease;
         font-size: 1.5rem;
-        margin-top: 5%;
+        margin-top: 0; /* Hapus margin-top */
+        margin-right: 0; /* Hapus margin-right */
+        grid-column: 1 / -1; /* Mengambil seluruh lebar di grid wrapper */
     }
+
+    .back-btn { /* Gaya khusus untuk tombol kembali */
+        grid-column: 1 / -1; /* Mengambil seluruh lebar di grid components2 */
+        margin-top: 1.5rem; /* Beri sedikit spasi di atasnya */
+    }
+
     .btn__secondary2 {
-        grid-column: 2/3;
-        grid-row: 1/2;
         color: var(--greyDark);
     }
     .btn__secondary2:hover {
@@ -142,10 +205,10 @@ html {
     .btn p {
         font-size: 1.6rem;
     }
-    /*  CLOCK  */
+    /* CLOCK  */
     .clock {
-        grid-column: 1/3;
-        grid-row: 1/3;
+        grid-column: 1 / -1; /* Mengambil seluruh lebar di grid */
+        grid-row: 1 / 2; /* Baris pertama */
         width: 12rem;
         height: 12rem;
         justify-self: center;
@@ -238,12 +301,14 @@ html {
         left: 98%;
         transform: translateX(-0.6rem);
     }
-    /*  ICONS  */
+    /* ICONS  */
     .icon {
-        grid-column: 3/4;
-        grid-row: 4/5;
-        display: grid;
+        grid-column: 1 / -1; /* Mengambil seluruh lebar di grid */
+        grid-row: 3 / 4; /* Baris terakhir */
+        display: flex; /* Gunakan flex untuk memusatkan ikon dalam satu baris */
         justify-content: center;
+        align-items: center;
+        margin-top: 1.5rem; /* Tambahkan spasi di atas ikon */
     }
     .icon2 {
         display: none;
@@ -275,54 +340,51 @@ html {
 
 @media screen and (max-width: 900px) {
     .container {
-        min-height: 100%;
+        /* min-height: 100%; */ /* Dihapus, height diatur oleh flexbox */
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         font-family: "Poppins", sans-serif;
-        background: var(--greyLight-1);
-        padding-top: 50%;
+        padding-top: 0;
+        margin-top: 0;
+        width: 100%;
+        height: auto;
     }
-    .components {
+    .header {
+        margin-bottom: 3rem;
         width: 70%;
-        height: 50%;
+        max-width: 400px; /* Batasi lebar maksimum */
+    }
+    .components,
+    .components2 { /* Gabungkan styling untuk konsistensi */
+        width: 70%;
+        max-width: 500px; /* Batasi lebar maksimum */
+        height: auto; /* Biarkan konten menentukan tinggi */
         border-radius: 3rem;
         box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2), -0.2rem -0.2rem 1.8rem var(--white);
         padding: 4.5rem;
         display: grid;
-        grid-template-columns: repeat(autofit, min-content);
-        grid-template-rows: repeat(autofit, -webkit-min-content);
-        grid-template-rows: repeat(autofit, min-content);
-        grid-column-gap: 1.5rem;
-        grid-row-gap: 2.5rem;
+        grid-template-columns: 1fr; /* Satu kolom untuk mobile */
+        grid-template-rows: auto auto auto auto; /* Baris menyesuaikan konten */
+        gap: 2.5rem; /* Jarak antar item */
         align-items: center;
+        justify-items: center; /* Pusatkan item dalam grid */
     }
     .components2 {
-        width: 70%;
-        height: 50%;
-        border-radius: 3rem;
-        box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2), -0.2rem -0.2rem 1.8rem var(--white);
-        padding: 4.5rem;
         display: none;
-        grid-template-columns: repeat(autofit, min-content);
-        grid-template-rows: repeat(autofit, -webkit-min-content);
-        grid-template-rows: repeat(autofit, min-content);
-        grid-column-gap: 1.5rem;
-        grid-row-gap: 2.5rem;
-        align-items: center;
     }
     .wrapper {
-        width: inherit;
-        height: inherit;
-        grid-template-columns: repeat(autofit, min-content);
-        grid-template-rows: repeat(autofit, -webkit-min-content);
-        grid-template-rows: repeat(autofit, min-content);
-        grid-column-gap: 1.5rem;
-        grid-row-gap: 2.5rem;
-        justify-items: center;
+        width: 100%; /* Ambil lebar penuh dari components2 */
+        height: auto; /* Biarkan konten menentukan tinggi */
+        display: grid; /* Mengubah wrapper menjadi grid juga */
+        grid-template-columns: 1fr; /* Satu kolom */
+        gap: 1.5rem; /* Jarak antar item */
+        justify-items: center; /* Pusatkan item dalam grid */
         margin-bottom: 5%;
+        margin-right: 0; /* Hapus margin-right yang statis */
     }
-    /*  BUTTONS  */
+    /* BUTTONS  */
     .btn {
         width: 15rem;
         height: 4rem;
@@ -334,6 +396,8 @@ html {
         justify-content: center;
         cursor: pointer;
         transition: 0.3s ease;
+        padding: 1rem 2rem;
+        font-size: 1.6rem;
     }
     .btn2 {
         width: 20rem;
@@ -346,158 +410,32 @@ html {
         cursor: pointer;
         transition: 0.3s ease;
         font-size: 1.5rem;
-        margin-top: 5%;
-        margin-right: 10%;
+        margin-top: 0; /* Hapus margin-top */
+        margin-right: 0; /* Hapus margin-right */
+        grid-column: 1 / -1; /* Mengambil seluruh lebar di grid wrapper */
     }
     .btn__primary {
-        grid-column: 1/2;
-        grid-row: 3/4;
-        background: var(--primary);
-        box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light), inset -0.2rem -0.2rem 1rem var(--primary-dark), 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white);
-        color: var(--greyLight-1);
-    }
-    .btn__primary:hover {
-        color: var(--white);
-    }
-    .btn__primary:active {
-        box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-dark), inset -0.2rem -0.2rem 1rem var(--primary-light);
+        grid-column: 1 / 2; /* Kolom 1 */
+        grid-row: 2 / 3; /* Baris 2 */
     }
     .btn__secondary {
-        grid-column: 1/1;
-        grid-row: 4/4;
-        color: var(--greyDark);
+        grid-column: 1 / 2; /* Kolom 1 */
+        grid-row: 3 / 4; /* Baris 3 */
     }
-    .btn__secondary:hover {
-        color: var(--primary);
+    .back-btn { /* Gaya khusus untuk tombol kembali */
+        grid-column: 1 / -1; /* Mengambil seluruh lebar di grid components2 */
+        margin-top: 1.5rem; /* Beri sedikit spasi di atasnya */
     }
-    .btn__secondary:active {
-        box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2), inset -0.2rem -0.2rem 0.5rem var(--white);
-    }
-    .btn p {
-        font-size: 1.6rem;
-    }
-    /*  CLOCK  */
+    /* CLOCK  */
     .clock {
-        grid-column: 1/2;
-        grid-row: 1/3;
-        width: 12rem;
-        height: 12rem;
-        justify-self: center;
-        box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white);
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
+        grid-column: 1 / -1; /* Mengambil seluruh lebar di grid */
+        grid-row: 1 / 2; /* Baris pertama */
     }
-    .clock .hand {
-        position: absolute;
-        transform-origin: bottom;
-        bottom: 6rem;
-        border-radius: 0.2rem;
-        z-index: 200;
-    }
-    .clock .hours {
-        width: 0.4rem;
-        height: 3.2rem;
-        background: var(--greyLight-3);
-    }
-    .clock .minutes {
-        width: 0.4rem;
-        height: 4.6rem;
-        background: var(--greyDark);
-    }
-    .clock .seconds {
-        width: 0.2rem;
-        height: 5.2rem;
-        background: var(--primary);
-    }
-    .clock .point {
-        position: absolute;
-        width: 0.8rem;
-        height: 0.8rem;
-        border-radius: 50%;
-        background: var(--primary);
-        z-index: 300;
-    }
-    .clock .marker {
-        width: 95%;
-        height: 95%;
-        border-radius: 50%;
-        position: relative;
-        box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2), inset -0.2rem -0.2rem 0.5rem var(--white);
-    }
-    .clock .marker::after {
-        content: "";
-        width: 60%;
-        height: 60%;
-        position: absolute;
-        box-shadow: inset 1px 1px 1px var(--greyLight-2), inset -1px -1px 1px var(--white);
-        border-radius: 50%;
-        top: 20%;
-        left: 20%;
-        filter: blur(1px);
-    }
-    .clock .marker__1,
-    .clock .marker__2,
-    .clock .marker__3,
-    .clock .marker__4 {
-        position: absolute;
-        border-radius: 0.1rem;
-        box-shadow: inset 1px 1px 1px var(--greyLight-2), inset -1px -1px 1px var(--white);
-    }
-    .clock .marker__1,
-    .clock .marker__2 {
-        width: 0.2rem;
-        height: 0.6rem;
-        left: 5.6rem;
-    }
-    .clock .marker__3,
-    .clock .marker__4 {
-        width: 0.6rem;
-        height: 0.2rem;
-        top: 5.6rem;
-    }
-    .clock .marker__1 {
-        top: 2%;
-    }
-    .clock .marker__2 {
-        top: 98%;
-        transform: translateY(-0.6rem);
-    }
-    .clock .marker__3 {
-        left: 2%;
-    }
-    .clock .marker__4 {
-        left: 98%;
-        transform: translateX(-0.6rem);
-    }
-    /*  ICONS  */
+    /* ICONS  */
     .icon {
-        grid-column: 3/4;
-        grid-row: 4/5;
-        display: grid;
-        justify-content: center;
-    }
-    .icon2 {
-        display: none;
-    }
-    .icon__add {
-        width: 4rem;
-        height: 4rem;
-        border-radius: 50%;
-        box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2rem;
-        cursor: pointer;
-        color: var(--greyDark);
-        transition: all 0.5s ease;
-    }
-    .icon__add:active {
-        box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2), inset -0.2rem -0.2rem 0.5rem var(--white);
-        color: var(--primary);
+        grid-column: 1 / -1; /* Mengambil seluruh lebar di grid */
+        grid-row: 4 / 5; /* Baris terakhir */
+        margin-top: 1.5rem; /* Tambahkan spasi di atas ikon */
     }
     .icon__add:hover {
         cursor: pointer;
